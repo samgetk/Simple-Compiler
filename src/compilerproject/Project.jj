@@ -1,0 +1,216 @@
+options
+{
+LOOKAHEAD=2;
+STATIC=false;
+}
+PARSER_BEGIN(Project)
+package compilerproject;
+public class Project
+{
+
+ 
+}
+PARSER_END(Project)
+
+
+SKIP:
+{
+" "
+| "\r"
+| "\t"
+| "\n"
+}
+
+TOKEN :
+{
+
+  < CLASS:  "Class" > {new FXMLDocumentController().ListTokens("CLASS: "+image+"\n");}
+| < LPAREN: "(" > {new FXMLDocumentController().ListTokens("LPAREN: "+image+"\n");}
+| < RPAREN: ")" > {new FXMLDocumentController().ListTokens("RPAREN: "+image+"\n");}
+| < OPEN_CURL_BRACE: "{" > {new FXMLDocumentController().ListTokens("OPEN_CURL_BRACE: "+image+"\n");}
+| < CLOSE_CURL_BRACE: "}" > {new FXMLDocumentController().ListTokens("CLOSE_CURL_BRACE: "+image+"\n");}
+| < SEMI_COLON: ";" > {new FXMLDocumentController().ListTokens("SEMI-COLON: "+image+"\n");}
+| < EQUAL: "=" > {new FXMLDocumentController().ListTokens("EQUAL: "+image+"\n");}
+| < LESS: "<" > {new FXMLDocumentController().ListTokens("LESS: "+image+"\n");}
+| < GREATER: ">" > {new FXMLDocumentController().ListTokens("GREATER: "+image+"\n");}
+| < PLUS: "+" > {new FXMLDocumentController().ListTokens("PLUS: "+image+"\n");}
+| < MINUS: "-" > {new FXMLDocumentController().ListTokens("MINUS: "+image+"\n");}
+| < GET: "get_value" > {new FXMLDocumentController().ListTokens("GET: "+image+"\n");}
+| < END: "end" > {new FXMLDocumentController().ListTokens("END: "+image+"\n");}
+| < IF: "if" > {new FXMLDocumentController().ListTokens("IF: "+image+"\n");}
+| < ELSE: "else" > {new FXMLDocumentController().ListTokens("IF: "+image+"\n");}
+| < OUTPUT: "print" > {new FXMLDocumentController().ListTokens("OUTPUT: "+image+"\n");}
+| < MULTIPLICATION: "*" >{new FXMLDocumentController().ListTokens("MULTIPLICATION: "+image+"\n");}
+| < DIVISION: "/" > {new FXMLDocumentController().ListTokens("DIVISION: "+image+"\n");}
+
+}
+
+
+void relational_operators():
+{}
+{
+LOOKAHEAD(2)
+<EQUAL> | <LESS> | <GREATER> | <GREATER><EQUAL> | <LESS> <EQUAL>| "!"<EQUAL> | <EQUAL><EQUAL>
+}
+
+
+void DataTypes() :
+
+{}
+
+{
+ 
+  "char"
+|
+  "byte"
+|
+  "int"
+|
+  "long"
+|
+  "double"
+}
+
+
+
+TOKEN:
+{
+  <NUMBER:(<DIGIT>)+ ("." (<DIGIT>)+)?> {new FXMLDocumentController().ListTokens("NUMBER: "+image+"\n");}           
+| < ID: ["a"-"z","A"-"Z", "_"] (["a"-"z","A"-"Z","0"-"9","_"])* > {new FXMLDocumentController().ListTokens("ID: "+image+"\n");}  
+| < DIGIT:["0"-"9"]> 
+
+}
+
+TOKEN:{< EOL: "." >{new FXMLDocumentController().ListTokens("EOL: "+image+"\n");}  }
+
+
+void start():
+{}
+{
+declareClass() choice()  <END> <EOL> <CLOSE_CURL_BRACE> | add()
+}
+
+void declareClass():
+{}
+{
+<CLASS> <ID> <OPEN_CURL_BRACE>
+}
+
+void choice():
+{}
+{
+addClass()| ifClass()
+}
+
+void addClass():
+{}
+{
+declareVariable() (add() | ifClass() )
+ 
+}
+
+
+
+void ifClass():
+{}
+{
+declareVariable() <IF> <LPAREN> <ID> relational_operators() <ID> <RPAREN> <OPEN_CURL_BRACE>  display() <CLOSE_CURL_BRACE>  else_part() 
+}
+
+void else_part():
+{}
+{
+<ELSE> <OPEN_CURL_BRACE> display() <CLOSE_CURL_BRACE>
+}
+
+
+void declareVariable() :
+{}
+{
+ (DataTypes() <ID> (declare() | intialize() | operate()))*
+}
+
+void operate():
+{}
+{
+<EQUAL> <ID> (<PLUS> | <MINUS> | <MULTIPLICATION> | <DIVISION>) <ID> <EOL> display()
+}
+
+void declare():
+{}
+{
+ <EOL>
+}
+
+void intialize():
+{}
+{
+<EQUAL> <NUMBER> <EOL>
+}
+
+void display():
+{}
+{
+print()  <EOL>
+}
+
+void print():
+{}
+{
+<OUTPUT> <LPAREN> <ID> <RPAREN>  
+}
+
+
+void add():
+{
+double a;
+}
+{
+a=expr() <EOL> {new FXMLDocumentController().Result(a);} 
+| <EOL>  
+
+
+}
+double expr():
+{
+double a;
+double b;
+}
+{
+a=term()
+( 
+  "+" b=expr() {a+=b;}
+ | "-" b=expr() {a-=b;}
+)* {return a;}
+
+}
+double term():
+{
+double a;
+double b;
+}
+{
+a=unary()
+( 
+  "*" b=term() { a*=b;}
+  |"/" b=term() { a/=b;}
+)*
+ {return a;}
+ }
+ double unary():
+ {
+ double a;
+ }
+ {
+    "-" a=element() {return -a;}
+  | a=element()  {return a;}
+ }
+ double element():
+ {
+ Token t;
+ double a;
+ }
+ {
+ t=<NUMBER>  {return Double.parseDouble(t.toString());}
+ | "(" a=expr() ")" {return a;}
+ }

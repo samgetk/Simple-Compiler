@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" minWidth="1333.0" prefHeight="692.9999000000025" prefWidth="1369.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="compilerproject.FXMLDocumentController">
+  <children>
+    <Accordion layoutX="14.0" layoutY="93.0">
+      <expandedPane>
+        <TitledPane fx:id="x1" animated="true" minWidth="1179.0" prefHeight="546.9998779296875" prefWidth="1341.0" text="Program 2">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="523.0" prefWidth="1469.0">
+              <children>
+                <TextArea fx:id="secondprogram" layoutX="0.0" layoutY="0.0" prefHeight="287.0" prefWidth="1337.0" wrapText="true" />
+                <Separator layoutX="0.0" layoutY="333.0" prefWidth="1337.0" />
+                <Separator layoutX="0.0" layoutY="361.0" prefWidth="1337.0" />
+                <Text layoutX="14.0" layoutY="351.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Output:">
+                  <fill>
+                    <Color blue="0.288" green="0.000" red="0.600" fx:id="x2" />
+                  </fill>
+                  <font>
+                    <Font size="14.0" fx:id="x3" />
+                  </font>
+                </Text>
+                <TextArea fx:id="secondresult" layoutX="0.0" layoutY="372.0" prefHeight="137.0" prefWidth="1337.0" wrapText="true" />
+                <Button layoutX="14.0" layoutY="292.0" mnemonicParsing="false" onAction="#RunSecondProgram" prefHeight="34.0" text="Run" />
+                <Button layoutX="75.0" layoutY="292.0" mnemonicParsing="false" onAction="#TokenForSecondProgram" prefHeight="34.0" text="Get Tokens" />
+                <Button layoutX="197.0" layoutY="292.0" mnemonicParsing="false" prefHeight="34.0" text="Open File" />
+                <Button layoutX="312.0" layoutY="293.0" mnemonicParsing="false" prefHeight="34.0" text="Save" />
+              </children>
+            </AnchorPane>
+          </content>
+        </TitledPane>
+      </expandedPane>
+      <panes>
+        <TitledPane fx:id="x4" animated="true" prefHeight="538.0" prefWidth="1341.0" text="Program 1">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="635.0" prefWidth="1337.0">
+              <children>
+                <TextArea fx:id="firstprogram" layoutX="0.0" layoutY="0.0" prefHeight="283.0" prefWidth="1337.0" wrapText="true" />
+                <Button layoutX="14.0" layoutY="288.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="34.0" text="Run" />
+                <Button layoutX="73.0" layoutY="288.0" mnemonicParsing="false" onAction="#TokenForFirstProgram" prefHeight="33.999900000002526" text="Get Tokens" />
+                <Separator layoutX="0.0" layoutY="328.0" minHeight="1.0" prefHeight="1.0" prefWidth="1337.0" />
+                <Separator layoutX="0.0" layoutY="357.0" minHeight="1.0" prefHeight="1.0" prefWidth="1337.0" />
+                <TextArea fx:id="firstresult" layoutX="0.0" layoutY="358.0" prefHeight="166.0" prefWidth="1337.0" wrapText="true" />
+                <Text fill="$x2" font="$x3" layoutX="14.0" layoutY="348.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Output:" />
+                <Button layoutX="180.0" layoutY="288.0" mnemonicParsing="false" onAction="#openFile" prefHeight="34.0" prefWidth="88.0" text="Open File" />
+                <Button layoutX="304.0" layoutY="289.0" mnemonicParsing="false" onAction="#saveFile" prefHeight="33.999900000002526" text="Save" />
+              </children>
+            </AnchorPane>
+          </content>
+        </TitledPane>
+        <fx:reference source="x1" />
+      </panes>
+    </Accordion>
+    <ImageView fitHeight="95.93533592410714" fitWidth="317.66666412353516" layoutX="612.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+        <Image url="@Images/our%20compiler%20logo.png" />
+      </image>
+    </ImageView>
+    <ImageView fitHeight="74.93533325195312" fitWidth="132.1114279490423" layoutX="375.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+        <Image url="@Images/g5-logo.png" />
+      </image>
+    </ImageView>
+    <Text fill="#043300" layoutX="375.0" layoutY="684.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Designed and developed by Third year SWE Student For Principles of Compiler Design Project 2017.">
+      <font>
+        <Font size="15.0" />
+      </font>
+    </Text>
+  </children>
+</AnchorPane>
